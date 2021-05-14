@@ -5,7 +5,7 @@ export const router = {};
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function() {
+router.setState = function(path, data) {
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
@@ -35,4 +35,46 @@ router.setState = function() {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
+
+
+  /**
+   * 'path' is the URL of what we want to change to: '/', '/#entry', '/#settings'
+   * data = {entry, enteyCount}
+   * 
+   */
+  //journal-entry is the one from last lab, entry-page is the single page view
+
+  // Want to grab the things we want to change
+  const h1 = document.querySelector('h1'); //change title
+  const body = document.querySelector('body'); //change class
+  const entryPage = document.querySelector('entry-page'); //add or remove entries
+
+  // could want to go to /#entry1 
+  if(path.indexOf('/#entry') > -1 ){
+    //do we need to set document.title?
+    h1.innerHTML = "Entry " + data.entryCount;
+    body.className = 'single-entry';
+
+    let newEntry = document.createElement('entry-page');
+    newEntry.entry = data.entry;
+    entryPage.replaceWith(newEntry);
+
+
+  }else if (path == '/#settings'){
+    body.className = 'settings';
+    h1.innerHTML = 'Settings';
+    entryPage.replaceWith(document.createElement('entry-page'));
+
+  }else{ //then its '/' or home page
+    body.className = '';
+    h1.innerHTML = 'Journal Entries';
+    //reaplace with "new" blank entry-page
+    entryPage.replaceWith(document.createElement('entry-page'));
+
+  }
+
+
+
+
+
 }
